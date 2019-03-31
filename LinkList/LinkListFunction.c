@@ -10,11 +10,10 @@ struct link *AppendNode(struct link *head,int data){
 		exit(0);
 	}
 	if(head == NULL){
-		head == p;
-		return head;
+		head = p;
 	}else{
 		while(pr->next != NULL){
-			pr -> next;
+			pr = pr -> next;
 		}
 		pr->next = p;
 	}
@@ -25,12 +24,15 @@ struct link *AppendNode(struct link *head,int data){
 
 void DisplayNode(struct link *head){
 	struct link *p = head;
-	int j = 1;
-	p = p->next;
-	while(p != NULL){
-		printf("%5d%10d\n",j,p->data);
-		p = p->next;
-		j++;
+	int j = 0;
+	if(head != NULL){
+		while(p != NULL){
+			printf("%5d%10d\n",j,p->data);
+			p = p->next;
+			j++;
+		}
+	}else{
+		printf("No printable data!\n");
 	}
 }
 
@@ -55,7 +57,11 @@ struct link *DeleteNode(struct link *head,int nodeData){
 		p = p->next;
 	}
 	if(nodeData == p->data){
-		pr->next = p->next;
+		if(p == head){
+			head = p->next;
+		}else{
+			pr->next = p->next;
+		}
 		free(p);
 	}else{
 		printf("This Node has not been found!! \n");
@@ -70,12 +76,11 @@ struct link *InsertNode(struct link *head,int nodeData){
 		printf("No enough memory! \n");
 		exit(0);
 	}
+	p->next = NULL;
+	p->data = nodeData;
 	if(head == NULL){
 		head = p;
-	        return head;	
 	}else{
-		p->next = NULL;
-		p->data = nodeData;
 		while(pr->data < nodeData && pr->next != NULL){
 			temp = pr;
 			pr = pr->next;
@@ -116,7 +121,7 @@ struct link *SortingForLinkList(struct link *head){
 
 }
 
-void struct link *AddSerialForLinkList(struct link *head){
+void AddSerialForLinkList(struct link *head){
 	struct link *p = head;
 	int i=0;
 	while(p != NULL){
